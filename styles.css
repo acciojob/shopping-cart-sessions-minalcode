@@ -1,1 +1,97 @@
 /*  your css code here. If applicable */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 800px;
+  background-color: #f4f6f9;
+  color: #333;
+}
+
+h1 {
+  color: #222;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+h2 {
+  color: #333;
+  margin-top: 30px;
+}
+
+#product-list,
+#cart-list {
+  list-style: none;
+  padding: 0;
+}
+
+#product-list li,
+#cart-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+button {
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.add-to-cart-btn {
+  background-color: #2563eb;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.remove-from-cart-btn {
+  background-color: #f59e0b;
+}
+
+.remove-from-cart-btn:hover {
+  background-color: #d97706;
+}
+
+#clear-cart-btn {
+  background-color: #dc2626;
+  margin-top: 10px;
+}
+
+#clear-cart-btn:hover {
+  background-color: #b91c1c;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin-top: 25px;
+}
+
+@media (max-width: 500px) {
+  body {
+    margin: 10px auto;
+    padding: 15px;
+  }
+
+  #product-list li,
+  #cart-list li {
+    flex-wrap: wrap;
+  }
+}

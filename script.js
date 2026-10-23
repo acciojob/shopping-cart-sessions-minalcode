@@ -1,6 +1,4 @@
-// This is the boilerplate code given for you
-// You can modify this code
-// Product data
+
 const products = [
   { id: 1, name: "Product 1", price: 10 },
   { id: 2, name: "Product 2", price: 20 },
@@ -9,29 +7,103 @@ const products = [
   { id: 5, name: "Product 5", price: 50 },
 ];
 
-// DOM elements
 const productList = document.getElementById("product-list");
+const cartList = document.getElementById("cart-list");
+const clearCartBtn = document.getElementById("clear-cart-btn");
 
-// Render product list
+let cart = JSON.parse(
+  window.sessionStorage.getItem("cart") || "[]"
+);
+
+// Render products
 function renderProducts() {
+  productList.innerHTML = "";
+
   products.forEach((product) => {
     const li = document.createElement("li");
-    li.innerHTML = `${product.name} - $${product.price} <button class="add-to-cart-btn" data-id="${product.id}">Add to Cart</button>`;
+
+    li.innerHTML = `
+      ${product.name} - $${product.price}
+      <button class="add-to-cart-btn" data-id="${product.id}">
+        Add to Cart
+      </button>
+    `;
+
     productList.appendChild(li);
   });
 }
 
-// Render cart list
-function renderCart() {}
+// Render cart
+function renderCart() {
+  cartList.innerHTML = "";
 
-// Add item to cart
-function addToCart(productId) {}
+  cart.forEach((product) => {
+    const li = document.createElement("li");
 
-// Remove item from cart
-function removeFromCart(productId) {}
+    li.innerHTML = `
+      ${product.name} - $${product.price}
+      <button class="remove-from-cart-btn" data-id="${product.id}">
+        Remove
+      </button>
+    `;
+
+    cartList.appendChild(li);
+  });
+}
+
+// Save cart in sessionStorage
+function saveCart() {
+  window.sessionStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// Add product to cart
+function addToCart(productId) {
+  const product = products.find(
+    (item) => item.id === Number(productId)
+  );
+
+  if (product) {
+    cart.push(product);
+    saveCart();
+    renderCart();
+  }
+}
+
+// Remove product from cart
+function removeFromCart(productId) {
+  const index = cart.findIndex(
+    (item) => item.id === Number(productId)
+  );
+
+  if (index !== -1) {
+    cart.splice(index, 1);
+    saveCart();
+    renderCart();
+  }
+}
 
 // Clear cart
-function clearCart() {}
+function clearCart() {
+  cart = [];
+  saveCart();
+  renderCart();
+}
+
+// Handle Add and Remove buttons
+productList.addEventListener("click", function (event) {
+  if (event.target.classList.contains("add-to-cart-btn")) {
+    addToCart(event.target.dataset.id);
+  }
+});
+
+cartList.addEventListener("click", function (event) {
+  if (event.target.classList.contains("remove-from-cart-btn")) {
+    removeFromCart(event.target.dataset.id);
+  }
+});
+
+// Clear cart button
+clearCartBtn.addEventListener("click", clearCart);
 
 // Initial render
 renderProducts();
